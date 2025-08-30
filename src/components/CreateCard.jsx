@@ -3,11 +3,8 @@ import Input from "../components/Helpers/Input";
 import { useEffect, useState } from "react";
 
 export default function CreateCard() {
-
-
-    
   return (
-    <div className="flex py-4 justify-around border border-gray-300 rounded-lg  mx-4 my-8 ">
+    <div className="flex py-4 justify-between px-2 border border-gray-300 rounded-lg mx-4 my-8 lg:w-[38%]">
       <Input type="text" placeholder="Nova tarefa..." className={""} />
 
       <Button

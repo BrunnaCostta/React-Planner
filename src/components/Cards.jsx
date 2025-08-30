@@ -7,7 +7,7 @@ export default function Cards() {
 
   return (
     <>
-      <div className="border border-gray-300 rounded-lg  mx-4 ">
+      <div className="border border-gray-300 rounded-lg  mx-4 lg:w-[38%] lg:mx-auto lg:h-[250px]">
         <div className="flex items-center gap-2 justify-center py-4 bg-[#f3e5ff]">
           <CalendarDaysIcon className="h-5 w-5 text-[#9d4edd]" />
           <h3 className="text-[#9d4edd] font-bold">Tarefas do Dia</h3>
@@ -22,8 +22,9 @@ export default function Cards() {
           </div>
         </section>
       </div>
-
-      <CreateCard />
+      <div className="lg:flex lg:justify-center">
+        <CreateCard />
+      </div>
     </>
   );
 }

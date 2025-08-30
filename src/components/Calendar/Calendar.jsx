@@ -57,9 +57,9 @@ export default function Calendar() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4">
+    <div className=" mx-auto p-4 lg:w-[40%]">
       <header className="bg-[#e7c6ff] px-4 pt-2 flex justify-between items-center rounded-t-lg">
-        <h1 className="text-[#9d4edd] text-lg font-semibold text-center">
+        <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 text-lg font-bold text-center">
           {months[selectedMonth]} {year}
         </h1>
 
