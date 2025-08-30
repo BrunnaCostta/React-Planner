@@ -56,8 +56,10 @@ export default function Calendar() {
     }
   };
 
+  const selectDay = () => {};
+
   return (
-    <div className=" mx-auto p-4 lg:w-[40%]">
+    <div className=" mx-auto px-4 py-6 lg:w-[40%]">
       <header className="bg-[#e7c6ff] px-4 pt-2 flex justify-between items-center rounded-t-lg">
         <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 text-lg font-bold text-center">
           {months[selectedMonth]} {year}
