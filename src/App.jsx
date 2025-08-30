@@ -1,11 +1,12 @@
 import React from "react";
 import Calendar from "./components/Calendar/Calendar";
-import Testandocalendar from "./components/Calendar/Testandocalendar";
+import Cards from "./components/Cards";
 
 function App() {
   return (
     <div>
-      <Testandocalendar />
+      <Calendar />
+      <Cards />
     </div>
   );
 }

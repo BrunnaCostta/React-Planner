@@ -1,8 +1,7 @@
-"use client";
-import { useState, useMemo } from "react";
+import { useState } from "react";
+import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 
-const DAYS_OF_WEEK_PT = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-const MONTHS_PT = [
+const months = [
   "Janeiro",
   "Fevereiro",
   "Março",
@@ -17,143 +16,87 @@ const MONTHS_PT = [
   "Dezembro",
 ];
 
-export default function CustomCalendar({
-  events = [],
-  onDateSelect,
-  initialDate = new Date(),
-  primaryColor = "#e7c6ff",
-  secondaryColor = "#e5e7eb",
-  showWeekNumbers = false,
-  firstDayOfWeek = 0,
-}) {
-  const [currentDate, setCurrentDate] = useState(initialDate);
-  const [selectedDate, setSelectedDate] = useState(initialDate);
+const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
-  const isSameDay = (a, b) => a.toDateString() === b.toDateString();
+export default function Calendar() {
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  const [year, setYear] = useState(new Date().getFullYear());
 
-  const monthDays = useMemo(() => {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    const firstDay = new Date(year, month, 1);
-    const startDate = new Date(firstDay);
-    startDate.setDate(
-      startDate.getDate() - ((firstDay.getDay() - firstDayOfWeek + 7) % 7)
-    );
+  const firstDay = new Date(year, selectedMonth, 1);
+  const lastDay = new Date(year, selectedMonth + 1, 0);
 
-    const days = [];
-    const date = new Date(startDate);
-    for (let i = 0; i < 42; i++) {
-      days.push(new Date(date));
-      date.setDate(date.getDate() + 1);
+  const generateDays = () => {
+    const data = [];
+    for (let i = 0; i < firstDay.getDay(); i++) {
+      data.push(null);
     }
-    return days;
-  }, [currentDate, firstDayOfWeek]);
-
-  const navigateMonth = (dir) => {
-    setCurrentDate((prev) => {
-      const newDate = new Date(prev);
-      newDate.setMonth(prev.getMonth() + (dir === "next" ? 1 : -1));
-      return newDate;
-    });
+    for (let i = 1; i <= lastDay.getDate(); i++) {
+      data.push(i);
+    }
+    return data;
   };
 
-  const handleDateSelect = (date) => {
-    setSelectedDate(date);
-    onDateSelect?.(date);
+  const days = generateDays();
+
+  const NextMonth = () => {
+    if (selectedMonth === 11) {
+      setSelectedMonth(0);
+      setYear(year + 1);
+    } else {
+      setSelectedMonth(selectedMonth + 1);
+    }
   };
 
-  const getWeekNumber = (date) => {
-    const d = new Date(
-      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-    );
-    const dayNum = d.getUTCDay() || 7;
-    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    return Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+  const BackMonth = () => {
+    if (selectedMonth === 0) {
+      setSelectedMonth(11);
+      setYear(year - 1);
+    } else {
+      setSelectedMonth(selectedMonth - 1);
+    }
   };
 
   return (
-    <div
-      style={{
-        width: "95vw",
-        maxWidth: "1200px",
-        margin: "auto",
-        padding: "1rem",
-      }}
-    >
-      {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "1rem",
-        }}
-      >
-        <button
-          onClick={() => navigateMonth("prev")}
-          style={{ fontSize: "1.2rem" }}
-        >
-          {"<"}
-        </button>
-        <h2>
-          {MONTHS_PT[currentDate.getMonth()]} {currentDate.getFullYear()}
-        </h2>
-        <button
-          onClick={() => navigateMonth("next")}
-          style={{ fontSize: "1.2rem" }}
-        >
-          {">"}
-        </button>
-      </div>
+    <div className="max-w-md mx-auto p-4">
+      <header className="bg-[#e7c6ff] px-4 pt-2 flex justify-between items-center rounded-t-lg">
+        <h1 className="text-[#9d4edd] text-lg font-semibold text-center">
+          {months[selectedMonth]} {year}
+        </h1>
 
-      {/* Week Days */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(7, 1fr)",
-          marginBottom: "0.5rem",
-        }}
-      >
-        {DAYS_OF_WEEK_PT.map((day) => (
-          <div key={day} style={{ textAlign: "center", fontWeight: "bold" }}>
-            {day}
-          </div>
-        ))}
-      </div>
+        <div className="flex gap-2 mb-2">
+          <button
+            className="bg-white h-8 w-8 flex items-center justify-center rounded"
+            onClick={BackMonth}
+          >
+            <ChevronLeftIcon className="h-5 w-5 text-[#9d4edd]" />
+          </button>
+          <button
+            className="bg-white h-8 w-8 flex items-center justify-center rounded"
+            onClick={NextMonth}
+          >
+            <ChevronRightIcon className="h-5 w-5 text-[#9d4edd]" />
+          </button>
+        </div>
+      </header>
 
-      {/* Calendar Grid */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(7, 1fr)",
-          gap: "4px",
-        }}
-      >
-        {monthDays.map((date, idx) => {
-          const isToday = isSameDay(date, new Date());
-          const isSelected = isSameDay(date, selectedDate);
-          const isCurrentMonth = date.getMonth() === currentDate.getMonth();
+      <section className="h-[350px] border border-gray-200 rounded-lg">
+        <div className="grid grid-cols-7 text-center py-6 text-[#c77dff] font-bold">
+          {daysOfWeek.map((day, index) => (
+            <div key={index}>{day}</div>
+          ))}
+        </div>
 
-          return (
+        <div className="grid grid-cols-7 gap-2 text-center">
+          {days.map((day, index) => (
             <div
-              key={idx}
-              onClick={() => handleDateSelect(date)}
-              style={{
-                padding: "1rem",
-                textAlign: "center",
-                cursor: "pointer",
-                borderRadius: "0.5rem",
-                backgroundColor: isSelected ? primaryColor : "transparent",
-                color: isSelected ? "#fff" : isCurrentMonth ? "#000" : "#999",
-                fontWeight: isToday ? "bold" : "normal",
-              }}
+              key={index}
+              className="h-10 flex items-center justify-center border border-gray-100 rounded"
             >
-              {date.getDate()}
+              {day || ""}
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
