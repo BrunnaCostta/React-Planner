@@ -10,7 +10,7 @@ function App() {
       <Calendar />
       <Cards />
     </div>
-  );
+  );C
 }
 
 export default App;

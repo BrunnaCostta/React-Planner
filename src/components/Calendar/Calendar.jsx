@@ -19,8 +19,10 @@ const months = [
 const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
 export default function Calendar() {
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
-  const [year, setYear] = useState(new Date().getFullYear());
+  const today = new Date();
+  const [selectedMonth, setSelectedMonth] = useState(today.getMonth());
+  const [year, setYear] = useState(today.getFullYear());
+  const [daySelected, setDaySelected] = useState(null);
 
   const firstDay = new Date(year, selectedMonth, 1);
   const lastDay = new Date(year, selectedMonth + 1, 0);
@@ -45,6 +47,7 @@ export default function Calendar() {
     } else {
       setSelectedMonth(selectedMonth + 1);
     }
+    setDaySelected(null);
   };
 
   const BackMonth = () => {
@@ -54,12 +57,21 @@ export default function Calendar() {
     } else {
       setSelectedMonth(selectedMonth - 1);
     }
+    setDaySelected(null);
   };
 
-  const selectDay = () => {};
+  const selectDay = (day) => {
+    if (day) setDaySelected(day);
+  };
+
+  const isToday = (day) =>
+    day &&
+    day === today.getDate() &&
+    selectedMonth === today.getMonth() &&
+    year === today.getFullYear();
 
   return (
-    <div className=" mx-auto px-4 py-6 lg:w-[40%]">
+    <div className="mx-auto px-4 py-6 lg:w-[40%]">
       <header className="bg-[#e7c6ff] px-4 pt-2 flex justify-between items-center rounded-t-lg">
         <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 text-lg font-bold text-center">
           {months[selectedMonth]} {year}
@@ -89,14 +101,29 @@ export default function Calendar() {
         </div>
 
         <div className="grid grid-cols-7 gap-2 text-center">
-          {days.map((day, index) => (
-            <div
-              key={index}
-              className="h-10 flex items-center justify-center border border-gray-100 rounded"
-            >
-              {day || ""}
-            </div>
-          ))}
+          {days.map((day, index) => {
+            const isSelected = day && daySelected === day; 
+            return (
+              <button
+                key={index}
+                onClick={() => selectDay(day)}
+                disabled={!day}
+                className={`
+        h-10 flex items-center justify-center rounded 
+        ${day ? "cursor-pointer" : "cursor-default"}
+        ${
+          isSelected
+            ? "bg-purple-500 text-white font-bold"
+            : isToday(day)
+            ? "bg-pink-300 text-white font-bold"
+            : "border border-gray-100"
+        }
+      `}
+              >
+                {day || ""}
+              </button>
+            );
+          })}
         </div>
       </section>
     </div>
