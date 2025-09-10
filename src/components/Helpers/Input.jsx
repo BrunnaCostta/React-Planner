@@ -5,6 +5,7 @@ export default function Input({
   className,
   placeholder,
   style,
+
 }) {
   return (
     <input
@@ -14,6 +15,7 @@ export default function Input({
       className={className}
       placeholder={placeholder}
       style={style}
+     
     />
   );
 }

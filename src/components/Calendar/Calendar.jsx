@@ -18,7 +18,7 @@ const months = [
 
 const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
-export default function Calendar() {
+export default function Calendar({ onSelectDay }) {
   const today = new Date();
   const [selectedMonth, setSelectedMonth] = useState(today.getMonth());
   const [year, setYear] = useState(today.getFullYear());
@@ -26,6 +26,16 @@ export default function Calendar() {
 
   const firstDay = new Date(year, selectedMonth, 1);
   const lastDay = new Date(year, selectedMonth + 1, 0);
+
+  const selectDay = (day) => {
+    if (day) {
+      setDaySelected(day);
+      const date = new Date(year, selectedMonth, day);
+      if (onSelectDay) {
+        onSelectDay(date);
+      }
+    }
+  };
 
   const generateDays = () => {
     const data = [];
@@ -60,10 +70,6 @@ export default function Calendar() {
     setDaySelected(null);
   };
 
-  const selectDay = (day) => {
-    if (day) setDaySelected(day);
-  };
-
   const isToday = (day) =>
     day &&
     day === today.getDate() &&
@@ -71,30 +77,30 @@ export default function Calendar() {
     year === today.getFullYear();
 
   return (
-    <div className="mx-auto px-4 py-6 lg:w-[40%]">
-      <header className="bg-[#e7c6ff] px-4 pt-2 flex justify-between items-center rounded-t-lg">
+    <div className="mx-auto px-4 py-6 lg:w-[50%] ">
+      <header className=" px-4 pt-2 flex bg-[#2B2C34] justify-between items-center rounded-t-lg">
         <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 text-lg font-bold text-center">
           {months[selectedMonth]} {year}
         </h1>
 
         <div className="flex gap-2 mb-2">
           <button
-            className="bg-white h-8 w-8 flex items-center justify-center rounded"
+            className="h-8 w-8 flex items-center justify-center rounded"
             onClick={BackMonth}
           >
-            <ChevronLeftIcon className="h-5 w-5 text-[#9d4edd]" />
+            <ChevronLeftIcon className="h-5 w-5 text-white" />
           </button>
           <button
-            className="bg-white h-8 w-8 flex items-center justify-center rounded"
+            className=" h-8 w-8 flex items-center justify-center rounded"
             onClick={NextMonth}
           >
-            <ChevronRightIcon className="h-5 w-5 text-[#9d4edd]" />
+            <ChevronRightIcon className="h-5 w-5 text-white" />
           </button>
         </div>
       </header>
 
-      <section className="h-[350px] border border-gray-200 rounded-lg">
-        <div className="grid grid-cols-7 text-center py-6 text-[#c77dff] font-bold">
+      <section className="h-[350px] border border-[#30313A] bg-[#2B2C34] rounded-b-lg text-white px-3">
+        <div className="grid grid-cols-7 text-center py-6 font-bold">
           {daysOfWeek.map((day, index) => (
             <div key={index}>{day}</div>
           ))}
@@ -102,23 +108,23 @@ export default function Calendar() {
 
         <div className="grid grid-cols-7 gap-2 text-center">
           {days.map((day, index) => {
-            const isSelected = day && daySelected === day; 
+            const isSelected = day && daySelected === day;
             return (
               <button
                 key={index}
                 onClick={() => selectDay(day)}
                 disabled={!day}
                 className={`
-        h-10 flex items-center justify-center rounded 
-        ${day ? "cursor-pointer" : "cursor-default"}
-        ${
-          isSelected
-            ? "bg-purple-500 text-white font-bold"
-            : isToday(day)
-            ? "bg-pink-300 text-white font-bold"
-            : "border border-gray-100"
-        }
-      `}
+                  h-10 flex items-center justify-center rounded 
+                  ${day ? "cursor-pointer" : "cursor-default"}
+                  ${
+                    isSelected
+                      ? "bg-purple-500 text-white font-bold"
+                      : isToday(day)
+                      ? "bg-purple-600 text-white font-bold"
+                      : " rounded-lg bg-[#383940]"
+                  }
+                `}
               >
                 {day || ""}
               </button>

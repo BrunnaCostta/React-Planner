@@ -1,16 +1,18 @@
 import React from "react";
-import Calendar from "./components/Calendar/Calendar";
-import Cards from "./components/Cards";
+import Tasks from "./components/tasks";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen bg-[#14151D]">
       <Header />
-      <Calendar />
-      <Cards />
+      <main className="flex-grow">
+        <Tasks />
+      </main>
+      <Footer />
     </div>
-  );C
+  );
 }
 
 export default App;
