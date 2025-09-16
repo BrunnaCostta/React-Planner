@@ -1,17 +1,19 @@
-import React from "react";
-import Tasks from "./components/tasks";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Home from "./components/Home";
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#14151D]">
-      <Header />
-      <main className="flex-grow">
-        <Tasks />
-      </main>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/Home" element={<Home />} />
+        <Route path="/Header" element={<Header />} />
+      </Routes>
       <Footer />
-    </div>
+    </BrowserRouter>
   );
 }
 

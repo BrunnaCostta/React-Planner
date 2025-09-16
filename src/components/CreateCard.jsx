@@ -9,12 +9,12 @@ export default function CreateCard({ onAddTask, selectedDate }) {
   );
 
   const addTask = () => {
-    if (!input || !selectedDate) return; 
+    if (!input || !selectedDate) return;
 
     const newTask = {
       text: input,
       done: false,
-      date: selectedDate.toISOString().split("T")[0], 
+      date: selectedDate.toISOString().split("T")[0],
     };
 
     const updatedTasks = [...tasks, newTask];
@@ -29,9 +29,7 @@ export default function CreateCard({ onAddTask, selectedDate }) {
       <Input
         type="text"
         value={input}
-        placeholder={
-          selectedDate ? "Nova tarefa..." : "Selecione uma data no calendário"
-        }
+        placeholder={"Nova tarefa..."}
         className="text-white bg-[#] "
         style={{
           border: "1px solid gray",
@@ -45,7 +43,7 @@ export default function CreateCard({ onAddTask, selectedDate }) {
 
       <Button
         className={
-          "bg-gradient-to-r from-pink-400 to-purple-600 rounded-lg text-white px-3 py-1"
+          "bg-gradient-to-r from-pink-400 to-purple-600 rounded-lg text-white px-3 py-1 cursor-pointer"
         }
         name="Adicionar"
         onClick={addTask}
