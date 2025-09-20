@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Input from "../components/Helpers/Input";
-import Button from "./Helpers/Button";
+import Input from "../Helpers/Input";
+import Button from "../Helpers/Button";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {

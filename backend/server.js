@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
 
-app.post("/usuario", async (req, resp) => {
+app.post("/register", async (req, resp) => {
   await prisma.user.create({
     data: {
       email: req.body.email,
@@ -15,7 +15,7 @@ app.post("/usuario", async (req, resp) => {
       age: req.body.age,
     },
   });
-  resp.status(201).json(req.body);
+  res.status(200).json({ message: "Usuário criado com sucesso" }, req.body);
 });
 
 // 1 - tipo de rota/método http
