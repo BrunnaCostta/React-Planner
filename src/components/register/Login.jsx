@@ -29,6 +29,10 @@ export default function Login() {
     }
   };
 
+  const createAccount = () => {
+    navigate("/Register");
+  };
+
   return (
     <section className="bg-[#14151D] h-screen flex flex-col">
       <header className="font-bold text-center py-2 text-white bg-gradient-to-r from-pink-400 to-purple-600">
@@ -64,7 +68,9 @@ export default function Login() {
 
         <div className="flex justify-between w-full text-sm pt-2">
           <span className="px-4 cursor-pointer">Esqueceu a senha?</span>
-          <span className="mr-4 cursor-pointer">Não tenho conta</span>
+          <span className="mr-4 cursor-pointer" onClick={createAccount}>
+            Não tenho conta
+          </span>
         </div>
         <Button
           className={

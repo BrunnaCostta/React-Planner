@@ -2,6 +2,8 @@ import { useState } from "react";
 import Input from "../Helpers/Input";
 import Button from "../Helpers/Button";
 import { useNavigate } from "react-router-dom";
+import CreatecreateUser from "../../repository/registerRepository";
+
 import {
   AtSymbolIcon,
   UserIcon,
@@ -26,6 +28,28 @@ export default function Register() {
   const handleClick = () => {
     if (inputsValid) {
       navigate("/home");
+    }
+  };
+
+  const accountCreated = async () => {
+    console.log("aa");
+    if (!inputsValid || passwordInput !== confirmPassword) {
+      alert("Preencha os campos corretamente e confirme a senha!");
+      return;
+    }
+
+    try {
+      const data = await CreatecreateUser({
+        name: nameInput,
+        email: emailInput,
+        password: passwordInput,
+      });
+
+      console.log("Conta criada com sucesso:", data);
+      navigate("/home");
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao criar a conta. Tente novamente.");
     }
   };
 
@@ -94,7 +118,7 @@ export default function Register() {
               ? "bg-gradient-to-r from-pink-400 to-purple-600 my-4 px-3 py-2 rounded-xl my-auto cursor-pointer"
               : "bg-gray-600 my-4 px-3 py-2 rounded-xl my-auto  cursor-pointer"
           }
-          onClick={handleClick}
+          onClick={accountCreated}
           name="Criar conta"
           disable={!inputsValid}
         />
