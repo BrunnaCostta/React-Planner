@@ -8,9 +8,13 @@ ________________________________________________________________________________
 ✨ Destaques
 
 ✅ Visualização de calendário — organize suas tarefas em cada dia
+
 📝 Adicionar e excluir tarefas — controle total sobre sua rotina
+
 🔑 Autenticação completa — faça login, crie uma conta ou saia quando quiser
+
 📱 Responsivo — utilize em computadores, tablets e celulares
+
 🎯 Interface intuitiva — fácil de usar, rápida e eficiente
 
 
