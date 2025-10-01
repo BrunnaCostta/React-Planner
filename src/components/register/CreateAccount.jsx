@@ -88,7 +88,7 @@ export default function Register() {
           <span className="flex items-center gap-2 w-full bg-gray-700 rounded-lg px-3 py-2">
             <LockClosedIcon className="h-5 w-5 text-gray-400" />
             <Input
-              type="text"
+              type="password"
               value={passwordInput}
               onChange={passwordAcess}
               placeholder="Digite sua senha"

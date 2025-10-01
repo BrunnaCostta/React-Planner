@@ -1,14 +1,15 @@
 import express from "express";
 import { PrismaClient } from "./src/generated/prisma/index.js";
+import cors from "cors";
 
 const prisma = new PrismaClient();
-
 const app = express();
+
 app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5175", // ou "*" para liberar todas origens (não recomendado em produção)
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
