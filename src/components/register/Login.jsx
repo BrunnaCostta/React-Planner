@@ -2,11 +2,13 @@ import { useState } from "react";
 import Input from "../Helpers/Input";
 import Button from "../Helpers/Button";
 import { useNavigate } from "react-router-dom";
+import { LoginUser } from "../../repository/registerRepository";
 
 export default function Login() {
   const [emailInput, setEmailInput] = useState("");
   const [emailValid, setEmailValid] = useState(true);
   const [passwordInput, setPasswordInput] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -23,9 +25,27 @@ export default function Login() {
 
   const inputsValid = emailValid && passwordInput.length > 0;
 
-  const handleClick = () => {
-    if (inputsValid) {
-      navigate("/home");
+  const handleClick = async () => {
+    if (!inputsValid) {
+      setErrorMessage("Preencha corretamente os campos!");
+      return;
+    }
+
+    try {
+      const response = await LoginUser({
+        email: emailInput,
+        password: passwordInput,
+      });
+
+      if (response.user && response.user.password === passwordInput) {
+        navigate("/home");
+      } else {
+        setErrorMessage("Usuário ou senha incorretos!");
+        alert("Dados inválidos. Verifique e tente novamente");
+      }
+    } catch (err) {
+      console.error(err);
+      setErrorMessage("Dados incorretos. Verique seus dados e tente novamente");
     }
   };
 
@@ -72,6 +92,12 @@ export default function Login() {
             Não tenho conta
           </span>
         </div>
+        {errorMessage && (
+          <p className="text-red-500 text-sm pt-4 text-center">
+            {errorMessage}
+          </p>
+        )}
+
         <Button
           className={
             inputsValid
