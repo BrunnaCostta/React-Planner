@@ -1,14 +1,15 @@
 import express from "express";
 import { PrismaClient } from "./src/generated/prisma/index.js";
+import cors from "cors";
 
 const prisma = new PrismaClient();
-
 const app = express();
+
 app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5175", // ou "*" para liberar todas origens (não recomendado em produção)
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -29,24 +30,16 @@ app.post("/register", async (req, res) => {
     .json({ message: "Usuário criado com sucesso", data: req.body });
 });
 
-app.get("/usuario", async (req, res) => {
-  try {
-    const { email, name, password } = req.query;
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
 
-    const filter = {};
-    if (email) filter.email = email;
-    if (name) filter.name = name;
-    if (password) filter.password = password;
+  const user = await prisma.user.findUnique({ where: { email } });
 
-    const users = await prisma.user.findMany({
-      where: filter,
-    });
+  if (!user) return res.status(401).json({ message: "Usuário não encontrado" });
+  if (user.password !== password)
+    return res.status(401).json({ message: "Senha incorreta" });
 
-    res.status(200).json({ message: "Usuários encontrados", data: users });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Erro ao buscar usuários" });
-  }
+  res.status(200).json({ message: "Login realizado com sucesso", user });
 });
 
 // 1 - tipo de rota/método http

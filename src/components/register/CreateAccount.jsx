@@ -25,10 +25,8 @@ export default function Register() {
 
   const inputsValid = emailInput.length > 0 && passwordInput.length > 0;
 
-  const handleClick = () => {
-    if (inputsValid) {
-      navigate("/home");
-    }
+  const accessLogin = () => {
+    navigate("/login");
   };
 
   const accountCreated = async () => {
@@ -45,7 +43,6 @@ export default function Register() {
         password: passwordInput,
       });
 
-      console.log("Conta criada com sucesso:", data);
       navigate("/home");
     } catch (error) {
       console.error(error);
@@ -88,7 +85,7 @@ export default function Register() {
           <span className="flex items-center gap-2 w-full bg-gray-700 rounded-lg px-3 py-2">
             <LockClosedIcon className="h-5 w-5 text-gray-400" />
             <Input
-              type="text"
+              type="password"
               value={passwordInput}
               onChange={passwordAcess}
               placeholder="Digite sua senha"
@@ -108,7 +105,10 @@ export default function Register() {
           </span>
         </section>
 
-        <span className="mr-4 cursor-pointer flex justify-center w-full text-sm pt-2">
+        <span
+          className="mr-4 cursor-pointer flex justify-center w-full text-sm pt-2"
+          onClick={accessLogin}
+        >
           Já possui login?
         </span>
 
