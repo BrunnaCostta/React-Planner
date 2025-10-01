@@ -2,17 +2,19 @@
 
 Gerencie seu dia a dia de forma simples e prática! Uma aplicação de agenda interativa onde você pode visualizar seu calendário, adicionar e excluir tarefas, além de acessar com segurança através de login e criação de conta.
 
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
 ✨ Destaques
 
 ✅ Visualização de calendário — organize suas tarefas em cada dia
-
 📝 Adicionar e excluir tarefas — controle total sobre sua rotina
-
 🔑 Autenticação completa — faça login, crie uma conta ou saia quando quiser
-
 📱 Responsivo — utilize em computadores, tablets e celulares
-
 🎯 Interface intuitiva — fácil de usar, rápida e eficiente
+
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 🚀 Como usar
 
@@ -26,7 +28,10 @@ Exclua tarefas quando não forem mais necessárias
 
 Saia da conta com segurança pelo botão logout
 
-📌 Tecnologias utilizadas:
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+📌 Tecnologias utilizadas
 
 ⚡ React (frontend)
 
@@ -35,6 +40,9 @@ Saia da conta com segurança pelo botão logout
 🗄️ Node.js + Express (backend)
 
 🛢️ Prisma + Banco de Dados (persistência de dados)
+
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 ⭐ Contribuição
 
